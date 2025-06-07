@@ -33,3 +33,55 @@ const User = mongoose.model("User",userSchema);   //MODEL
 user1.save();
 user2.save();
 user3.save();
+
+
+const mongoose = require("mongoose");
+
+main().then(()=>{
+    console.log("SUCCESSFULLY RESOLVED!");
+}).catch((err)=>{
+    console.log(err);
+})
+async function main(){
+    await mongoose.connect("mongodb://127.0.0.1:27017/test");
+}
+const bookSchema = new mongoose.Schema({
+    title : {
+        type : String,
+    },
+    author : {
+        type : String
+    },
+    price : {
+        type : Number
+    }
+})
+const Reader = mongoose.model("Reader",bookSchema);
+Reader.deleteMany({title : "ZERO TO ONE"}).then((res)=>{
+    console.log(res);
+}).catch((err)=>{
+    console.log(err);
+})
+Reader.find({}).then((res)=>{
+    console.log(res);
+}).catch((rej)=>{
+    console.log(rej);
+})
+let reader1 = new Reader({
+    title : "THE SUBTLE ART OF NOT GIVING A F*CK!",
+    author : "Mark Manson",
+    price : 1200
+});
+let reader2 = new Reader({
+    title : "RICH DAD POOR DAD",
+    author : "ROBERT KIYOSAKI",
+    price : 1500
+});
+let reader3 = new Reader({
+    title : "ZERO TO ONE",
+    author : "PETER THIEL",
+    price : 2000
+})
+ reader1.save();
+ reader2.save();
+ reader3.save();
